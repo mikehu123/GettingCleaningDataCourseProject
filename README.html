@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>GettingCleaningDataCourseProject</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h1>GettingCleaningDataCourseProject</h1>
+
+<h2>Introduction</h2>
+
+<p>This project collects and processes the raw Human Activity Recognition Using Smartphones Data Set 
+from the UCI Machine Learning Repository, then produces a tidy data set with the mean and standard deviation of each variable for each activity and each subject.</p>
+
+<h2>Files Included</h2>
+
+<ul>
+<li>READE.md - project overview and design considerations</li>
+<li>CodeBook.md - description on the variables and transformations </li>
+<li>run_analysis.R - data processing R script</li>
+<li>raw files - for convenience, not required by run_analysis.R which downloads raw data from web
+
+<ul>
+<li>UCI HAR Dataset/activity_labels.txt - mapping from activity id to activity label</li>
+<li>UCI HAR Dataset/features.txt - list of feature variable names</li>
+<li>UCI HAR Dataset/train/X_train.txt - Training Set</li>
+<li>UCI HAR Dataset/train/y_train.txt - Training labels</li>
+<li>UCI HAR Dataset/train/subject_train.txt - subject id of each train sample</li>
+<li>UCI HAR Dataset/test/X_test.txt - Test Set</li>
+<li>UCI HAR Dataset/test/y_test.txt - Test Labels</li>
+<li>UCI HAR Dataset/test/subject_test.txt - subject id of each test sample</li>
+</ul></li>
+<li>X_mean_sd_by_subject_activity.csv - tidy data set</li>
+</ul>
+
+<h2>How Raw Files are chosen</h2>
+
+<p>The raw data zip file contains a number of data files which can be categorized as follow:</p>
+
+<ul>
+<li>meta data files including
+
+<ul>
+<li>UCI HAR Dataset/activity_labels.txt - mappings from activity id to activity label</li>
+<li>UCI HAR Dataset/features.txt - list of feature variable names</li>
+</ul></li>
+<li>feature variable training and test data/labels and corresponding subject ids 
+
+<ul>
+<li>UCI HAR Dataset/train/X_train.txt - Training Set</li>
+<li>UCI HAR Dataset/train/y_train.txt - Training labels</li>
+<li>UCI HAR Dataset/train/subject_train.txt - subject id of each train sample</li>
+<li>UCI HAR Dataset/test/X_test.txt - Test Set</li>
+<li>UCI HAR Dataset/test/y_test.txt - Test Labels</li>
+<li>UCI HAR Dataset/test/subject_test.txt - subject id of each test sample</li>
+</ul></li>
+<li>accelerometer and gyroscope signals from which the feature variables were estimated
+
+<ul>
+<li>UCI HAR Dataset/train/Inertial Signals</li>
+<li>UCI HAR Dataset/test/Inertial Signals</li>
+</ul></li>
+</ul>
+
+<p>In this project, only the first two categories (i.e. meta data files and feature variable files) were used in data processing and not the accelerometer and gyroscope signals based on the following design considerations:</p>
+
+<ul>
+<li><p>One of the tidy data principle is that each tidy data table contains information about only one type of observation. Since the feature variables were estimated from the sensor signals, if we
+include feature variables, then the sensor signals can become redundant data hence shall be 
+excluded</p></li>
+<li><p>The requirements for the project is to compute the mean of sd of each measurement, i.e., it appears to look for more summarization of the measurements, so it seems to make more sense to use the estimated feature variables instead of the raw sensor signals here. Having said that, upon further clarifications on the requirements or the real needs of the data consumer, it is not impossible that the raw sensor signals are preferred, in which case it will be quite easy to update the script to use the sensor signals and the whole processing flow will remain mostly the same. </p></li>
+</ul>
+
+<h2>How The Data Processing Script works</h2>
+
+<p>This run_analysis.R script downloads and processes the raw data then produces a tidy data set.</p>
+
+<p>The main steps are</p>
+
+<ul>
+<li>download raw data</li>
+<li>read in descriptive feature variable names</li>
+<li>combine training and test data for X, y and subject respectively (rbind)</li>
+<li>assign description feature variables names to X feature variable columns </li>
+<li>read in description activity labels</li>
+<li>map activity id in raw data to activity labels </li>
+<li>combine X, subject, y (activity) data set (cbind)</li>
+<li>compute mean and standard deviation (sd) on feature variables per subject and activity</li>
+<li>write the resulting tidy data set to the output file</li>
+</ul>
+
+<h2>Notes on Running Script</h2>
+
+<p>The data processing script is designed to download the raw data file from web directly so it can 
+be run from any place and does not depend on the data files availability on user&#39;s local disk.</p>
+
+<p>However if the user has a slow network connection which may cause the script to take too long to download the file or already has the data files on local disk, the user can easily comment out the &#39;download.file&#39; and/or &#39;unzip&#39; codes in the beginning of the script and do the raw data downloading tasks manually outside the script.</p>
+
+</body>
+
+</html>
+
