@@ -20,7 +20,7 @@ from the UCI Machine Learning Repository, then produces a tidy data set with the
   * UCI HAR Dataset/test/X_test.txt - Test Set
   * UCI HAR Dataset/test/y_test.txt - Test Labels
   * UCI HAR Dataset/test/subject_test.txt - subject id of each test sample
-* X_mean_sd_by_subject_activity.csv - tidy data set
+* X_mean_sd_by_subject_activity.txt - tidy data set (tab separated format)
 
 ## How Raw Files are chosen
 

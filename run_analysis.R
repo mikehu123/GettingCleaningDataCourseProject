@@ -65,5 +65,5 @@ X_sub_act_mean_sd=aggregate(X_sub_act[,1:561],list(subject=X_sub_act$subject,act
                             ,FUN=function(x) c(mean=mean(x),sd=sd(x)))
 
 #### write tidy data to output file
-write.csv(X_sub_act_mean_sd,"X_mean_sd_by_subject_activity.csv",row.names=FALSE,quote=FALSE)
+write.table(X_sub_act_mean_sd,"X_mean_sd_by_subject_activity.txt",row.names=FALSE,quote=FALSE,sep="\t")
 

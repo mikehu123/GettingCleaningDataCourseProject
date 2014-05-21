@@ -17,6 +17,7 @@ This CodeBook describes how the raw data is transformed to the tidy data set and
   * map activity id in raw data to activity labels 
   * combine X, subject, y (activity) data set (cbind)
   * compute mean and standard deviation (sd) on feature variables per subject and activity
+  * output the tidy data set to a text file in tab separated format 
 
 ## Feature Variables
 
@@ -85,7 +86,7 @@ This CodeBook describes how the raw data is transformed to the tidy data set and
   * STANDING
   * LAYING
 
-### 6. The following is the full list of the column names of the tidy data set (X_mean_sd_by_subject_activity.csv)
+### 6. The following is the full list of the column names of the tidy data set (X_mean_sd_by_subject_activity.txt)
 
 * subject
 * activity
